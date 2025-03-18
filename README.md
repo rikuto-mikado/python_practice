@@ -7,11 +7,13 @@ Clone this repository:
 ```sh
 git clone https://github.com/rikuto-mikado/python_practice.git
 ```
+
 Navigate to the folder:
 ```sh
 cd python-practice
 ```
-Run a script:
+
+Run a script (replace filename.py with the file you want to run):
 ```sh
 python filename.py
 ```
