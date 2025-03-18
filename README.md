@@ -4,8 +4,8 @@ It includes various small programs to reinforce skills in user input handling, l
 
 ## How to Run 🚀  
 Clone this repository: `git clone` [https://github.com/rikuto-mikado/python_practice.git]
-Navigate to the folder:　cd python-practice
-Run the script: python filename.py
+Navigate to the folder:　`cd python-practice`
+Run the script: `python filename.py`
 
 ## Contents 📚  
 - 📝 User input validation  
