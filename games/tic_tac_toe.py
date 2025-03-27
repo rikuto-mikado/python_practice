@@ -1,19 +1,38 @@
-import os
+def print_board(board):
+    for row in board:
+        print(" | ".join(row))
+        print("-" * 9)
 
-def display_board(board):
-    os.system('clear')
+def check_win(b, p):
+    return any([
+        all([b[r][c] == p for c in range(3)]) for r in range(3)
+    ]) or any([
+        all([b[r][c] == p for r in range(3)]) for c in range(3)
+    ]) or all([b[i][i] == p for i in range(3)]) or all([b[i][2-i] == p for i in range(3)])
 
-    print("   |   |")
-    print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
-    print("   |   |")
-    print("-----------")
-    print("   |   |")
-    print(" " + board[4] + ' | ' + board[5]  + " | " + board[6])
-    print("   |   |")
-    print('-----------')
-    print(' ' + board[1] + " | " + board[2] + ' | ' + board[3] )
-    print("   |   |")
+board = [[" "]*3 for _ in range(3)]
+turn = "X"
 
-board = [' '] * 10
-display_board(board)
+while True:
+    print_board(board)
+    print(f"{turn}'s turn")
+    r = int(input("Row (0-2): "))
+    c = int(input("Col (0-2): "))
 
+    if board[r][c] != " ":
+        print("Occupied! Try again.")
+        continue
+
+    board[r][c] = turn
+
+    if check_win(board, turn):
+        print_board(board)
+        print(f"{turn} wins!")
+        break
+
+    if all(cell != " " for row in board for cell in row):
+        print_board(board)
+        print("Draw!")
+        break
+
+    turn = "O" if turn == "X" else "X"
