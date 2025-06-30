@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>ToDoリスト</h1>
+
+<form action="/add" method="post">
+    <input type="text" name="task" required>
+    <button type="submit">追加</button>
+</form>
+
+<ul>
+    {% for task in todos %}
+        <li>{{ task }} <a href="/delete/{{ loop.index0 }}">[削除]</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
