@@ -1,0 +1,18 @@
+[
+    {
+        "question": "The Earth is flat.",
+        "answer": false
+    },
+    {
+        "question": "Python is a programming language.",
+        "answer": true
+    },
+    {
+        "question": "2 + 2 equals 5.",
+        "answer": false
+    },
+    {
+        "question": "The capital of France is Paris.",
+        "answer": true
+    }
+]
