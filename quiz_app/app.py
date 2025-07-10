@@ -5,8 +5,8 @@ app = Flask(__name__)
 app.secret_key = "quiz_secret_key"
 
 # import from json
-with open("quiz_app", encoding="utf-8") as f:
-    quiz_list = json.load()
+with open("quiz.json", encoding="utf-8") as f:
+    quiz_list = json.load(f)
 
 
 @app.route("/")
