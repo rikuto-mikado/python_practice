@@ -1,22 +1,38 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diary</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <section id="heroContainer">
     <h1>My Diary Entries</h1>
-    <a href="/create">＋ New Entry</a>
-    <ul>
+
+    <div class="selectBox">
+      <a href="/create">＋ New Entry</a>
+    </div>
+
+    <div class="entryBox">
+      <ul>
         {% for entry in entries %}
         <li>
-            <h2>{{ entry.title }}</h2>
-            <small>{{ entry.date.strftime('%Y-%m-%d %H:%M') }}</small>
-            <p>{{ entry.content }}</p>
+          <h2>{{ entry.title }}</h2>
+          <small>{{ entry.date.strftime('%Y-%m-%d %H:%M') }}</small>
+          <p>{{ entry.content }}</p>
+          <div class="action-links">
+            <a href="/edit/{{ entry.id }}">✏️ Edit</a>
+            <a href="/delete/{{ entry.id }}" onclick="return confirm('Delete this entry?')">🗑️ Delete</a>
+          </div>
         </li>
         {% endfor %}
-    </ul>
+      </ul>
+    </div>
+  </section>
 </body>
 </html>

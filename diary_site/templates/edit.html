@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Entry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <section id="heroContainer">
+        <h1>Edit Entry</h1>
+        <div class="entryBox">
+            <form method="POST">
+                <input type="text" name="title" value="{{ entry.title }}" required><br><br>
+                <textarea name="content" rows="10" required>{{ entry.content }}</textarea><br><br>
+                <button type="submit">Update</button>
+            </form>
+            <br>
+            <a href="/">← Back to Diary</a>
+        </div>
+    </section>
+</body>
+</html>

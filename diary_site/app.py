@@ -36,6 +36,25 @@ def create():
     return render_template("create.html")
 
 
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
+def edit(id):
+    entry = Diary.query.get_or_404(id)
+    if request.method == "POST":
+        entry.title = request.form["title"]
+        entry.content = request.form["content"]
+        db.session.commit()
+        return redirect("/")
+    return render_template("edit.html", entry=entry)
+
+
+@app.route("/delete/<int:id>")
+def delete(id):
+    entry = Diary.query.get_or_404(id)
+    db.session.delete(entry)
+    db.session.commit()
+    return redirect("/")
+
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
