@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
-#heroContainer {
+#heroContainer,
+#editContainer,
+#createContainer {
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -8,10 +10,18 @@
     justify-content: center;
     text-align: center;
     gap: 1rem;
+    background-color: #000;
+    gap: 3rem;
 }
 
+#heroContainer h1,
+#editContainer h1,
+#createContainer h1 {
+    color: #fff;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
 
-/* ここが囲うボックス */
 .entryBox {
     background-color: #fff;
     padding: 2rem;
@@ -19,6 +29,58 @@
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     width: 90%;
     max-width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+.selectBox a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    border: 2px solid white;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.entryBox a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.entryBox a:hover {
+    color: #0056b3;
 }
 
 .entryBox ul {
@@ -27,24 +89,16 @@
     margin: 0;
 }
 
-.entryBox li {
-    margin-bottom: 2rem;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 1rem;
-}
-
-.entryBox h2 {
-    margin-bottom: 0.3rem;
-    font-size: 1.3rem;
-}
 
 .entryBox small {
     color: #777;
     font-size: 0.9rem;
+    font-style: normal;
 }
-
-.entryBox p {
-    white-space: pre-wrap;
-    margin-top: 0.8rem;
-    line-height: 1.6;
+.action-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1.5rem;
 }
