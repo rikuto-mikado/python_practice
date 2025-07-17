@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>New Diary Entry</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <title>New Diary Entry</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <section id="createContainer">
-        <h1>Write New Entry</h1>
-        <form method="POST">
-            <input type="text" name="title" placeholder="Title" required><br><br>
-            <textarea name="content" rows="10" cols="50" placeholder="Write your thoughts..." required></textarea><br><br>
-            <button type="submit">Save</button>
-        </form>
-        <br>
-        <a href="/">← Back to Diary</a>
-    </section>
+  <section id="formContainer">
+    <h1>Write New Entry</h1>
+    <div class="entryBox">
+      <form method="POST" class="diaryForm">
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="content" rows="10" placeholder="Write your thoughts..." required></textarea>
+        <button type="submit">Save</button>
+      </form>
+      <a href="/">← Back to Diary</a>
+    </div>
+  </section>
 </body>
 </html>

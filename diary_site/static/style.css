@@ -1,27 +1,31 @@
 @charset "UTF-8";
 
+#heroCotainer {
+    height: auto;
+}
+
+/* ===== 共通コンテナ（トップ・作成・編集） ===== */
 #heroContainer,
-#editContainer,
-#createContainer {
-    height: 100vh;
+#formContainer {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 1rem;
-    background-color: #000;
     gap: 3rem;
+    background-color: #000;
 }
 
+/* ===== 見出し（h1）共通スタイル ===== */
 #heroContainer h1,
-#editContainer h1,
-#createContainer h1 {
+#formContainer h1 {
     color: #fff;
     font-size: 3rem;
     margin-bottom: 1rem;
 }
 
+/* ===== ボックス共通（entryBox） ===== */
 .entryBox {
     background-color: #fff;
     padding: 2rem;
@@ -30,75 +34,87 @@
     width: 90%;
     max-width: 700px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
+/* ===== フォーム共通 ===== */
 form input[type="text"],
-form textarea {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    resize: vertical;
+form textarea,
+.diaryForm input[type="text"],
+.diaryForm textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  resize: vertical;
 }
 
-form button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+form button,
+.diaryForm button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-form button:hover {
-    background-color: #0056b3;
+form button:hover,
+.diaryForm button:hover {
+  background-color: #0056b3;
 }
 
-.selectBox a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    transition: color 0.3s ease;
-    border: 2px solid white;
-    border-radius: 8px;
-    padding: 1rem;
-}
-
+/* ===== リンク（entryBox内） ===== */
 .entryBox a {
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-    transition: color 0.3s ease;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  margin-top: 1rem;
+  display: inline-block;
 }
 
 .entryBox a:hover {
-    color: #0056b3;
+  color: #0056b3;
 }
 
+/* ===== トップページの New Entry ボタン ===== */
+.selectBox a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  border: 2px solid white;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+/* ===== リストと項目 ===== */
 .entryBox ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-
 
 .entryBox small {
-    color: #777;
-    font-size: 0.9rem;
-    font-style: normal;
+  color: #777;
+  font-size: 0.9rem;
+  font-style: normal;
 }
+
+/* ===== 編集/削除リンク ===== */
 .action-links {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    gap: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 1.5rem;
 }
