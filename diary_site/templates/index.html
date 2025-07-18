@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +16,7 @@
 
     <div class="entryBox">
       <ul>
-        {% for entry in entries %}
+        {% for entry in entries.items %}
         <li>
           <h2>{{ entry.title }}</h2>
           <small>{{ entry.date.strftime('%Y-%m-%d %H:%M') }}</small>
@@ -32,6 +28,18 @@
         </li>
         {% endfor %}
       </ul>
+    </div>
+
+    <div class="pagination">
+      {% if entries.has_prev %}
+        <a href="{{ url_for('index', page=entries.prev_num) }}">← Prev</a>
+      {% endif %}
+
+      <span>Page {{ entries.page }} of {{ entries.pages }}</span>
+
+      {% if entries.has_next %}
+        <a href="{{ url_for('index', page=entries.next_num) }}">Next →</a>
+      {% endif %}
     </div>
   </section>
 </body>
