@@ -1,0 +1,80 @@
+/* ざっくり例。既存CSSに足してOK */
+#container {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.city-form input[type="text"] {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: min(90vw, 320px);
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+.city-form button {
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.weather-card {
+  background: #fff;
+  color: #333;
+  padding: 1.4rem 1.6rem;
+  border-radius: 12px;
+  width: min(90vw, 420px);
+  text-align: left;
+}
+
+.temp-line {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.temp-line img {
+  width: 70px;
+  height: 70px;
+}
+
+.temp {
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+
+.details {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  line-height: 1.7;
+}
+
+.actions a {
+  color: #00aaff;
+  text-decoration: none;
+}
+
+.flash-messages {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+.flash {
+  background: #ff4d4f;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ city }} の天気</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <section id="container">
+    <h1>{{ data.name }} の現在の天気</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flash-messages">
+          {% for category, message in messages %}
+            <li class="flash {{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <div class="weather-card">
+      <div class="temp-line">
+        <img src="{{ icon_url }}" alt="{{ data.description }}">
+        <span class="temp">{{ data.temp }}°C</span>
+      </div>
+      <p class="desc">{{ data.description }}</p>
+
+      <ul class="details">
+        <li>体感温度: {{ data.feels_like }}°C</li>
+        <li>湿度: {{ data.humidity }}%</li>
+        <li>気圧: {{ data.pressure }} hPa</li>
+        <li>風速: {{ data.wind_speed }} m/s</li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <a href="{{ url_for('index') }}">← 検索に戻る</a>
+    </div>
+  </section>
+</body>
+</html>
