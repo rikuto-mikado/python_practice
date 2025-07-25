@@ -1,4 +1,3 @@
-/* ざっくり例。既存CSSに足してOK */
 #container {
   min-height: 100vh;
   background: #000;
@@ -78,3 +77,119 @@
   padding: 0.6rem 1rem;
   border-radius: 6px;
 }
+
+
+
+/* ===== forecast.html 用 ===== */
+
+#container.is-forecast {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.forecast-list {
+  /* 横並び（可変カラム） */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem 1.2rem;
+  width: min(960px, 95%);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.forecast-item {
+  background: #fff;
+  color: #333;
+  border-radius: 12px;
+  padding: 1rem 0.8rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.forecast-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.forecast-item strong {
+  font-size: 0.95rem;
+}
+
+.forecast-item img {
+  width: 80px;
+  height: 80px;
+  filter: saturate(1.4) contrast(1.2) drop-shadow(0 1px 2px rgba(0,0,0,.15));
+}
+
+.temp-range {
+  font-weight: 600;
+  margin-top: .2rem;
+}
+
+.desc {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* 戻るリンクなど */
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.actions a {
+  color: #00aaff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.actions a:hover {
+  text-decoration: underline;
+}
+
+/* --- スマホ最適化 --- */
+@media (max-width: 600px) {
+  #container {
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+  }
+
+  .forecast-list {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: .8rem;
+  }
+
+  .forecast-item img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .temp-range {
+    font-size: 0.95rem;
+  }
+
+  .desc {
+    font-size: 0.8rem;
+  }
+}
+
+
+
+.forecast-item.clear  { background: #fff7e6; }  /* 晴れ */
+.forecast-item.cloud  { background: #f3f4f6; }  /* 雲 */
+.forecast-item.rain   { background: #e6f3ff; }  /* 雨 */
+.forecast-item.snow   { background: #f0f7ff; }  /* 雪 */
+.forecast-item.other  { background: #ffffff; }  /* その他 */

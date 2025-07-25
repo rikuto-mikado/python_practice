@@ -5,9 +5,7 @@ from config import Config
 import os
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = (
-    Config.SECRET_KEY
-)  # ← ここを揃える（config.py に追加しておくと◎）
+app.config["SECRET_KEY"] = Config.SECRET_KEY
 
 client = OpenWeatherClient()
 
@@ -31,6 +29,17 @@ def weather():
 
     icon_url = f"https://openweathermap.org/img/wn/{data['icon']}@2x.png"
     return render_template("weather.html", city=city, data=data, icon_url=icon_url)
+
+
+@app.route("/forecast")
+def forecast():
+    city = request.args.get("city", Config.DEFAULT_CITY)
+    try:
+        data = client.forecast_by_city(city)
+    except Exception as e:
+        flash(f"予報の取得に失敗しました: {e}", "error")
+        return redirect(url_for("index"))
+    return render_template("forecast.html", city=city, data=data)
 
 
 if __name__ == "__main__":

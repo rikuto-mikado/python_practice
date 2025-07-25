@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ data.city }} の5日間予報</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <section id="container" class="is-forecast">
+    <h1>{{ data.city }} の5日間予報</h1>
+
+    <ul class="forecast-list">
+      {% for d in data.daily %}
+      {# 天気の説明文に応じて色トーン用クラスを決める #}
+      {% set tone =
+          'rain'  if '雨'   in d.desc
+          else 'cloud' if '雲'   in d.desc
+          else 'clear' if '晴'   in d.desc
+          else 'snow'  if '雪'   in d.desc
+          else 'other' %}
+      <li class="forecast-item {{ tone }}">
+        <strong>{{ d.date }}</strong><br>
+        <img src="https://openweathermap.org/img/wn/{{ d.icon }}@2x.png" alt="{{ d.desc }}">
+        <div class="temp-range">{{ d.temp_min }}°C / {{ d.temp_max }}°C</div>
+        <small class="desc">{{ d.desc }}</small>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div class="actions">
+      <a href="{{ url_for('weather', city=data.city) }}">← 現在の天気に戻る</a>
+    </div>
+  </section>
+</body>
+</html>
