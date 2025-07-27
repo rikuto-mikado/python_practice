@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -23,18 +19,18 @@
         </ul>
       {% endif %}
     {% endwith %}
-
-    <form method="GET" class="city-form">
+    
+    <form method="POST" class="city-form">
       <input
       type="text"
       name="city"
-      placeholder="都市名を入力 (例: Tokyo)"
-      value="{{ default_city }}"
-      required
+      placeholder="都市名を入力（例: Osaka）"
+      value="{{ initial_city }}"
       >
-      <button type="submit" formaction="{{ url_for('weather') }}">現在の天気</button>
-      <button type="submit" formaction="{{ url_for('forecast') }}">5日間予報</button>
+      <button type="submit" name="action" value="current">現在の天気</button>
+      <button type="submit" name="action" value="forecast">5日間予報</button>
     </form>
+
   </section>
 </body>
 </html>

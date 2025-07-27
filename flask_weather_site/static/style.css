@@ -160,7 +160,6 @@
   text-decoration: underline;
 }
 
-/* --- スマホ最適化 --- */
 @media (max-width: 600px) {
   #container {
     padding: 1.5rem 1rem;
@@ -184,12 +183,47 @@
   .desc {
     font-size: 0.8rem;
   }
+
+  .weather-card {
+    width: 92vw;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+  }
+
+  .temp-line {
+    gap: 0.5rem;
+  }
+  .temp-line img {
+    width: 56px;
+    height: 56px;
+  }
+  .temp {
+    font-size: 2.0rem;
+  }
+
+  .weather-card p.desc {
+    margin: 0.3rem 0 0;
+  }
+  .details {
+    margin: 0.5rem 0 0;
+    line-height: 1.5;
+  }
 }
 
 
 
-.forecast-item.clear  { background: #fff7e6; }  /* 晴れ */
-.forecast-item.cloud  { background: #f3f4f6; }  /* 雲 */
-.forecast-item.rain   { background: #e6f3ff; }  /* 雨 */
-.forecast-item.snow   { background: #f0f7ff; }  /* 雪 */
-.forecast-item.other  { background: #ffffff; }  /* その他 */
+.forecast-item.clear  {
+  background: #fff7e6;
+}
+.forecast-item.cloud  {
+  background: #f3f4f6;
+}
+.forecast-item.rain   {
+  background: #e6f3ff;
+}
+.forecast-item.snow   {
+  background: #f0f7ff;
+}
+.forecast-item.other  {
+  background: #ffffff;
+}
