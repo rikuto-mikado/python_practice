@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}学習ログ{% endblock %}
+{% block content %}
+<h1>学習ログ</h1>
+
+<form method="POST" class="log-form">
+    <input type="date" name="date" value="{{ today }}">
+    <input type="number" name="minutes" min="0" placeholder="分" required>
+    <input type="text" name="subject" placeholder="科目（例: Math）" required>
+    <input type="text" name="note" placeholder="メモ（任意）">
+    <button type="submit">追加</button>
+</form>
+
+
+<div class="tabs">
+    <button class="tab" data-range="week">今週</button>
+    <button class="tab" data-range="month">今月</button>
+  </div>
+
+  <div class="chart-wrap">
+    <canvas id="studyChart"></canvas>
+    <p class="total">合計：<span id="totalMin">0</span> 分</p>
+  </div>
+
+  <h2>最近の記録</h2>
+  <ul class="recent-list">
+    {% for r in recent %}
+      <li>{{ r.date }} / {{ r.subject }} / {{ r.minutes }}分 {% if r.note %}- {{ r.note }}{% endif %}</li>
+    {% endfor %}
+  </ul>
+
+  <script>
+    const ctx = document.getElementById('studyChart').getContext('2d');
+    let chart;
+    async function load(range='week') {
+      const res = await fetch(`/api/stats?range=${range}`);
+      const data = await res.json();
+      document.getElementById('totalMin').textContent = data.total;
+      const cfg = {
+        type: 'bar',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            label: '学習時間(分)',
+            data: data.values,
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: { grid: { display: false } },
+            y: { beginAtZero: true }
+          }
+        }
+      };
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, cfg);
+    }
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => load(btn.dataset.range));
+    });
+    load('week');
+  </script>
+{% endblock %}
