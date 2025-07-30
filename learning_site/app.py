@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from datetime import datetime, timedelta, date
+import calendar
 from models import db, StudyLog
 
 app = Flask(__name__)
@@ -34,7 +35,6 @@ def index():
         .limit(10)
         .all()
     )
-    # ← ここで今日の日付を渡す
     return render_template("index.html", recent=recent, today=date.today().isoformat())
 
 
@@ -42,13 +42,16 @@ def index():
 def api_stats():
     rng = request.args.get("range", "week")
     today = date.today()
+
     if rng == "month":
         start = today.replace(day=1)
+        last_day = calendar.monthrange(today.year, today.month)[1]
+        end = date(today.year, today.month, last_day)
     else:
         start = today - timedelta(days=today.weekday())
-    end = today
+        end = start + timedelta(days=6)
 
-    days = [(start + timedelta(days=i)) for i in range((end - start).days + 1)]
+    days = [start + timedelta(days=i) for i in range((end - start).days + 1)]
     series = {d.isoformat(): 0 for d in days}
 
     q = StudyLog.query.filter(StudyLog.date >= start, StudyLog.date <= end).all()
@@ -56,7 +59,7 @@ def api_stats():
         k = row.date.isoformat()
         series[k] = series.get(k, 0) + row.minutes
 
-    labels = list(series.keys())
+    labels = [d.isoformat() for d in days]
     values = [series[k] for k in labels]
     total = sum(values)
     return jsonify({"labels": labels, "values": values, "total": total})

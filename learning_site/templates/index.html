@@ -13,52 +13,58 @@
 
 
 <div class="tabs">
-    <button class="tab" data-range="week">今週</button>
-    <button class="tab" data-range="month">今月</button>
-  </div>
+  <button class="tab" data-range="week">今週</button>
+  <button class="tab" data-range="month">今月</button>
+</div>
 
-  <div class="chart-wrap">
-    <canvas id="studyChart"></canvas>
-    <p class="total">合計：<span id="totalMin">0</span> 分</p>
-  </div>
+<div class="period-nav">
+  <button id="prevBtn">← 前へ</button>
+  <span id="periodText"></span>
+  <button id="nextBtn">次へ →</button>
+</div>
 
-  <h2>最近の記録</h2>
-  <ul class="recent-list">
-    {% for r in recent %}
-      <li>{{ r.date }} / {{ r.subject }} / {{ r.minutes }}分 {% if r.note %}- {{ r.note }}{% endif %}</li>
-    {% endfor %}
-  </ul>
+<div class="chart-wrap">
+  <canvas id="studyChart"></canvas>
+  <p class="total">合計：<span id="totalMin">0</span> 分</p>
+</div>
 
-  <script>
-    const ctx = document.getElementById('studyChart').getContext('2d');
-    let chart;
-    async function load(range='week') {
-      const res = await fetch(`/api/stats?range=${range}`);
-      const data = await res.json();
-      document.getElementById('totalMin').textContent = data.total;
-      const cfg = {
-        type: 'bar',
-        data: {
-          labels: data.labels,
-          datasets: [{
-            label: '学習時間(分)',
-            data: data.values,
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            x: { grid: { display: false } },
-            y: { beginAtZero: true }
-          }
-        }
-      };
-      if (chart) chart.destroy();
-      chart = new Chart(ctx, cfg);
+<h2>最近の記録</h2>
+<ul class="recent-list">
+  {% for r in recent %}
+  <li>{{ r.date }} / {{ r.subject }} / {{ r.minutes }}分 {% if r.note %}- {{ r.note }}{% endif %}</li>
+  {% endfor %}
+</ul>
+
+<script>
+const ctx = document.getElementById('studyChart').getContext('2d');
+let chart;
+async function load(range='week') {
+  const res = await fetch(`/api/stats?range=${range}`);
+  const data = await res.json();
+  document.getElementById('totalMin').textContent = data.total;
+  const cfg = {
+    type: 'bar',
+    data: {
+      labels: data.labels,
+      datasets: [{
+      label: '学習時間(分)',
+      data: data.values,
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: { grid: { display: false } },
+      y: { beginAtZero: true }
     }
-    document.querySelectorAll('.tab').forEach(btn => {
-      btn.addEventListener('click', () => load(btn.dataset.range));
-    });
-    load('week');
-  </script>
+  }
+};
+if (chart) chart.destroy();
+chart = new Chart(ctx, cfg);
+}
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => load(btn.dataset.range));
+});
+load('week');
+</script>
 {% endblock %}
