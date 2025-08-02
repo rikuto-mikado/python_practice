@@ -35,36 +35,75 @@
   {% endfor %}
 </ul>
 
+
 <script>
-const ctx = document.getElementById('studyChart').getContext('2d');
+  
 let chart;
-async function load(range='week') {
-  const res = await fetch(`/api/stats?range=${range}`);
-  const data = await res.json();
-  document.getElementById('totalMin').textContent = data.total;
+let currentRange = 'week';
+let currentOffset = 0;
+
+function renderChart(labels, values) {
+  const ctx = document.getElementById('studyChart').getContext('2d');
   const cfg = {
     type: 'bar',
     data: {
-      labels: data.labels,
-      datasets: [{
-      label: '学習時間(分)',
-      data: data.values,
-    }]
-  },
-  options: {
-    responsive: true,
-    scales: {
-      x: { grid: { display: false } },
-      y: { beginAtZero: true }
+      labels,
+      datasets: [{ label: '学習時間(分)', data: values }]
+    },
+    options: {
+      responsive: true,
+      scales: { x: { grid: { display:false } }, y: { beginAtZero:true } }
     }
+  };
+
+  if (!chart) chart = new Chart(ctx, cfg);
+  else {
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = values;
+    chart.update();
   }
-};
-if (chart) chart.destroy();
-chart = new Chart(ctx, cfg);
 }
+
+async function load(range = currentRange, offset = currentOffset) {
+  currentRange = range;
+  currentOffset = offset;
+
+  const res = await fetch(`/api/stats?range=${range}&offset=${offset}`);
+  if (!res.ok) {
+    console.error('API error', res.status);
+    return;
+  }
+  const data = await res.json();
+
+  document.getElementById('totalMin').textContent = data.total ?? 0;
+  const periodText = document.getElementById('periodText');
+  if (periodText) periodText.textContent = data.period_label;
+
+  const totalLabel = document.getElementById('totalLabel');
+  if (totalLabel) {
+    const label = data.range === 'month' ? '今月合計' : '今週合計';
+    totalLabel.textContent = `${label}（${data.start}〜${data.end}）`;
+  }
+
+  const nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) nextBtn.disabled = (currentOffset >= 0);
+
+  renderChart(data.labels, data.values);
+}
+
 document.querySelectorAll('.tab').forEach(btn => {
-  btn.addEventListener('click', () => load(btn.dataset.range));
+  btn.addEventListener('click', () => load(btn.dataset.range, 0));
 });
-load('week');
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  load(currentRange, currentOffset - 1);
+});
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (currentOffset < 0) load(currentRange, currentOffset + 1);
+});
+
+document.addEventListener('DOMContentLoaded', () => load('week', 0));
+
 </script>
+
 {% endblock %}

@@ -41,15 +41,24 @@ def index():
 @app.route("/api/stats")
 def api_stats():
     rng = request.args.get("range", "week")
+    offset = int(request.args.get("offset", 0))
+
     today = date.today()
 
     if rng == "month":
-        start = today.replace(day=1)
-        last_day = calendar.monthrange(today.year, today.month)[1]
-        end = date(today.year, today.month, last_day)
+        y, m = today.year, today.month
+        m += offset
+        y += (m - 1) // 12
+        m = ((m - 1) % 12) + 1
+        start = date(y, m, 1)
+        last_day = calendar.monthrange(y, m)[1]
+        end = date(y, m, last_day)
+        period_label = f"{y}-{m:02d}"
     else:
-        start = today - timedelta(days=today.weekday())
+        this_monday = today - timedelta(days=today.weekday())
+        start = this_monday + timedelta(days=7 * offset)
         end = start + timedelta(days=6)
+        period_label = f"{start.isoformat()}〜{end.isoformat()}"
 
     days = [start + timedelta(days=i) for i in range((end - start).days + 1)]
     series = {d.isoformat(): 0 for d in days}
@@ -62,4 +71,16 @@ def api_stats():
     labels = [d.isoformat() for d in days]
     values = [series[k] for k in labels]
     total = sum(values)
-    return jsonify({"labels": labels, "values": values, "total": total})
+
+    return jsonify(
+        {
+            "labels": labels,
+            "values": values,
+            "total": total,
+            "range": rng,
+            "start": start.isoformat(),
+            "end": end.isoformat(),
+            "offset": offset,
+            "period_label": period_label,
+        }
+    )

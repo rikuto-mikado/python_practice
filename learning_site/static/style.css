@@ -1,0 +1,143 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 2rem;
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: #222;
+    margin-bottom: 1rem;
+}
+
+/* form */
+.log-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.log-form input,
+.log-form button {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.log-form button {
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.log-form button:hover {
+    background: #45a045;
+}
+
+/* tab */
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.tab {
+    background: #ddd;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.tab:hover {
+    background: #bbb;
+}
+
+/* nav */
+.period-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.period-nav button {
+    background: #2196f3;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.period-nav button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+#periodText {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* graph */
+.chart-wrap {
+    max-width: 100%;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ddd;
+    margin-bottom: 2rem;
+}
+
+.chart-wrap canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.chart-wrap .total {
+  text-align: right;
+  font-weight: bold;
+  margin-top: 0.8rem;
+}
+
+/* list */
+.recent-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+
+.recent-list li {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid #ccc;
+}
+
+
+@media(max-width: 600px) {
+    .log-form {
+        flex-direction: column;
+    }
+
+    .tabs {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .period-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .chart-wrap .total {
+        text-align: center;
+    }
+}
