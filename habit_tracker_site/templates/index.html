@@ -4,18 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Habit Tracker</title>
-    <style>
-
-        body { font-family: sans-serif; margin: 2em; }
-        .habit-form { margin-bottom: 2em; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ccc; padding: 0.5em; text-align: center; }
-        .completed { background-color: #d4edda; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Habit Tracker</h1>
-
 
     <div class="habit-form">
         <form action="{{ url_for('add_habit') }}" method="post">
@@ -25,7 +17,32 @@
     </div>
 
     {% if habits %}
+    <table>
+        <thead>
+            <tr>
+                <th>Habit</th>
+                <th>Status</th> 
+                <th>Streak</th>
+                <th>Rate</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
 
+            {% for habit in habits %}
+            <tr>
+                <td>{{ habit.name }}</td>
+                
+                <td>(Calendar will be here)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>
+                    <button>X</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% else %}
         <p>No habits yet. Add one to get started!</p>
     {% endif %}
