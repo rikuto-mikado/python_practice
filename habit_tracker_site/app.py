@@ -19,7 +19,6 @@ migrate = Migrate(app, db)
 class Habit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    # 習慣とその完了記録を関連付ける
     completions = db.relationship(
         "Completion", backref="habit", cascade="all, delete-orphan"
     )
@@ -31,9 +30,21 @@ class Completion(db.Model):
     habit_id = db.Column(db.Integer, db.ForeignKey("habit.id"), nullable=False)
 
 
+@app.route("/add_habit", methods=["POST"])
+def add_habit():
+    habit_name = request.form.get("habit_name")
+    if habit_name:
+        new_habit = Habit(name=habit_name)
+        db.session.add(new_habit)
+        db.session.commit()
+    return redirect(url_for("index"))
+
+
 @app.route("/")
 def index():
-    return render_template("index.html")
+    habits = Habit.query.all()
+
+    return render_template("index.html", habits=habits)
 
 
 if __name__ == "__main__":
