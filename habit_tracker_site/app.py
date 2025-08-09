@@ -43,8 +43,19 @@ def add_habit():
 @app.route("/")
 def index():
     habits = Habit.query.all()
-
     return render_template("index.html", habits=habits)
+
+
+@app.route("/delete/<int:habit_id>", methods=["POST"])
+def delete_habit(habit_id):
+
+    habit_to_delete = Habit.query.get_or_404(habit_id)
+
+    db.session.delete(habit_to_delete)
+
+    db.session.commit()
+
+    return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
