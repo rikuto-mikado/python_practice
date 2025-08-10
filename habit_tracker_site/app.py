@@ -2,7 +2,8 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+import calendar
 
 app = Flask(__name__)
 
@@ -42,8 +43,37 @@ def add_habit():
 
 @app.route("/")
 def index():
-    habits = Habit.query.all()
-    return render_template("index.html", habits=habits)
+    habits = Habit.query.order_by(Habit.id).all()
+    today = date.today()
+    year, month = today.year, today.month
+
+    cal = calendar.monthcalendar(year, month)
+
+    completions_by_habit = {}
+
+    for habit in habits:
+
+        completed_dates = (
+            db.session.query(Completion.date)
+            .filter(
+                Completion.habit_id == habit.id,
+                db.extract("year", Completion.date) == year,
+                db.extract("month", Completion.date) == month,
+            )
+            .all()
+        )
+
+        completions_by_habit[habit.id] = {d[0].day for d in completed_dates}
+
+    return render_template(
+        "index.html",
+        habits=habits,
+        calendar_data=cal,
+        year=year,
+        month_name=calendar.month_name[month],
+        weekdays=["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        completions_by_habit=completions_by_habit,
+    )
 
 
 @app.route("/delete/<int:habit_id>", methods=["POST"])
