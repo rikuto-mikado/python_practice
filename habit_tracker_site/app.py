@@ -70,6 +70,7 @@ def index():
         habits=habits,
         calendar_data=cal,
         year=year,
+        month=month,
         month_name=calendar.month_name[month],
         weekdays=["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         completions_by_habit=completions_by_habit,
@@ -85,6 +86,24 @@ def delete_habit(habit_id):
 
     db.session.commit()
 
+    return redirect(url_for("index"))
+
+
+@app.route("/toggle/<int:habit_id>/<int:year>/<int:month>/<int:day>", methods=["GET"])
+def toggle_completion(habit_id, year, month, day):
+    completion_date = date(year, month, day)
+
+    completion = Completion.query.filter_by(
+        habit_id=habit_id, date=completion_date
+    ).first()
+
+    if completion:
+        db.session.delete(completion)
+    else:
+        new_completion = Completion(habit_id=habit_id, date=completion_date)
+        db.session.add(new_completion)
+
+    db.session.commit()
     return redirect(url_for("index"))
 
 

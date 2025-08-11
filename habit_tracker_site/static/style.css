@@ -77,11 +77,13 @@ td a:hover {
 }
 
 td.completed {
+    background-color: #28a745;
+    color: white;
     font-weight: bold;
 }
 
 td.completed a {
-    color: #155724;
+    color: white;
 }
 
 td form {

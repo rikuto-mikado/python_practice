@@ -17,35 +17,44 @@
     </div>
 
     {% if habits %}
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Habit</th>
-                <th>Status</th> 
-                <th>Streak</th>
-                <th>Rate</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h2>{{ month_name }} {{ year }}</h2>
 
-            {% for habit in habits %}
-            <tr>
-                <td>{{ habit.name }}</td>
-                
-                <td>(Calendar will be here)</td>
-                <td>-</td>
-                <td>-</td>
-                <td>
-                    <form action="{{ url_for('delete_habit', habit_id=habit.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this habit?');">
-                        <button type="submit">X</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% for habit in habits %}
+    <div class="habit-container">
+        <h3>{{ habit.name }}</h3>
+        <table>
+            <thead>
+                <tr>
+                    {% for day_name in weekdays %}
+                        <th>{{ day_name }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for week in calendar_data %}
+                <tr>
+                    {% for day in week %}
+                        {% if day != 0 %}
+                            {% set is_completed = day in completions_by_habit[habit.id] %}
+                            <td class="{{ 'completed' if is_completed else '' }}">
+                                <a href="{{ url_for('toggle_completion', habit_id=habit.id, year=year, month=month, day=day) }}">
+                                    {{ day }}
+                                </a>
+                            </td>
+                        {% else %}
+                            <td class="empty"></td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <form action="{{ url_for('delete_habit', habit_id=habit.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this habit?');">
+            <button type="submit" class="delete-btn">Delete Habit</button>
+        </form>
+    </div>
+    {% endfor %}
+
     {% else %}
         <p>No habits yet. Add one to get started!</p>
     {% endif %}
